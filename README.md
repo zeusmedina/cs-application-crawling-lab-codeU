@@ -8,16 +8,16 @@
 
 ## Overview
 
-In this lab, we present our solution to the previous lab, and analyze the performance of Web indexing algorithms.  Then you will build a simple Web crawler.
+In this lab, we present our solution to the previous lab and analyze the performance of Web indexing algorithms.  Then you will build a simple Web crawler.
 
 
 ## Our Redis-backed indexer
 
 In our solution, we store two kinds of structures in Redis:
 
-*  For each search term, we have a `URLSet` that contains the set of URLs that contain the search term.
+*  For each search term, we have a `URLSet`, which is a Redis Set of URLs that contain the search term.
 
-*  For each URL, we have a `TermCounter`, which is a Hash that maps from each search term to the number of times it appears.
+*  For each URL, we have a `TermCounter`, which is a Redis Hash that maps each search term to the number of times it appears.
 
 We provided a function that takes a search term and returns the Redis key of its URLSet:
 
@@ -52,7 +52,7 @@ Here's our implementation of `indexPage`, which takes a URL and a JSoup `Element
 
 To index a page, we
 
-1.   Make a `TermCounter` for the contents of the page, using code from a previous lab.
+1.   Make a Java `TermCounter` for the contents of the page, using code from a previous lab.
 
 2.   Push the contents of the `TermCounter` to Redis.
 
@@ -82,7 +82,7 @@ Here's the new code that pushes a `TermCounter` to Redis:
 
 This method uses a `Transaction` to collect the operations and send them to the server all at once, which is much faster than sending a series of small operations.
 
-It loops through the terms in the `TermCounter`; for each one it
+It loops through the terms in the `TermCounter`.  For each one it
 
 1.  Finds or creates a `TermCounter` on Redis, then adds a field for the new term.
 
@@ -92,7 +92,7 @@ If the page has already been indexed, we delete its old `TermCounter` before pus
 
 That's it for indexing new pages.
 
-The second part of the lab asked you to write `getCounts`, which takes a search term and returns a map from each URL where it appears to the number of times it appears there.  Here is our solution:
+The second part of the lab asked you to write `getCounts`, which takes a search term and returns a map from each URL where the term appears to the number of times it appears there.  Here is our solution:
 
 ```java
 	public Map<String, Integer> getCounts(String term) {
@@ -132,19 +132,19 @@ Because of the way we designed the index, these methods are simple and efficient
 
 ## Analysis of indexing and lookup
 
-Let's suppose we have indexed `N` pages and discovered `M` unique seach terms.  How long will it take to look up a search term, and how long will it take to index a page?  See if you can answer these questions before you continue.
+Suppose we have indexed `N` pages and discovered `M` unique seach terms.  How long will it take to look up a search term, and how long will it take to index a page?  See if you can answer these questions before you continue.
 
 To look up a search term, we run `getCounts`, which 
 
 1.  Creates a map.
 
-2.  Runs `getURLs`.
+2.  Runs `getURLs` to get a Set of URLs.
 
 3.  For each URL in the Set, it runs `getCount` and adds an entry to a HashMap.
 
-`getURLs` takes time proportional to the number of URLs that contain the search term.  For rare terms, that might be a small number, but for common terms it might be as high as `N`.
+`getURLs` takes time proportional to the number of URLs that contain the search term.  For rare terms, that might be a small number, but for common terms it might be as large as `N`.
 
-Inside the loop, we run `getCount`, which finds a `TermCounter` on Redis, looks up a `term`, and adds an entry to a HashMap.  Those are all constant time operations, so the overall complexity of `getCounts` is O(N) in the worst case.  However, in practice the runtime is proportional to the number of pages that contain the term.
+Inside the loop, we run `getCount`, which finds a `TermCounter` on Redis, looks up a term, and adds an entry to a HashMap.  Those are all constant time operations, so the overall complexity of `getCounts` is O(N) in the worst case.  However, in practice the runtime is proportional to the number of pages that contain the term, which is normally much less than `N`.
 
 This algorithm is about as efficient as it can be, in terms of algorithmic complexity, but it is very slow because it sends many small operations to Redis.  You can make it much faster using a `Transaction`.  You might want to do that as an exercise, or you can see our solution in `RedisIndex.java`.
 
@@ -152,13 +152,15 @@ To index a page, we traverse the DOM trees, find all the `TextNode` objects, and
 
 For each term, we increment a counter in a HashMap, which is a constant time operation.  So making the `TermCounter` takes time proportional to the number of words on the page.
 
-Pushing the `TermCounter` to Redis requires:
+Pushing the `TermCounter` to Redis requires deleting a `TermCounter`, which takes time proportional to the number of terms. Then for each term we have to
 
-1.  Deleting a `TermCounter`, which takes time proportional to the number of terms,
+1.  Add an element to a `URLSet`, which is constant time, and
 
-2.  Adding an element to a URLSet, which is constant time,
+2.  Add an element to a Redis `TermCounter`, which is constant time.
 
-3.  Adding the term to a Redis Hash, which takes time proportional to the number of terms.
+So the overall complexity is proportional to the number of unique search terms.
+
+In summary, making the `TermCounter` is proportional to the number of words on the page.  Pushing the `TermCounter` to Redis is proportional to the number of unique terms.
 
 Since the number of words on the page usually exceeds the number of unique search terms, the overall complexity is proportional to the number of words on the page.  In theory a page might contain all search terms in the index, so the worst case performance is O(M), but we don't expect to see the worse case in practice.
 
@@ -176,7 +178,7 @@ If you did the "Getting to Philosophy" lab, you already have a program that read
 
 *   Finds all the links on the page and adds the linked URLs to a queue, and
 
-*   Works its way through the queue, loading and indexing pages and adding new URLs to the queue.
+*   Works its way through the queue, loading pages, indexing them, and adding new URLs to the queue.
 
 *   If it finds a URL in the queue that has already been indexed, it skips it.
 
@@ -205,24 +207,24 @@ In the subdirectory `javacs-lab11/src/com/flatironschool/javacs` you'll find the
 
     *  `WikiCrawler.java`, which contains starter code for your crawler.
     
-    *  `WikiCrawlerTest.java`, which contains test code for `WikiCrawler`
+    *  `WikiCrawlerTest.java`, which contains test code for `WikiCrawler`.
     
     *  `JedisIndex.java`, which is our solution to the previous lab.
     
-And several of the helper classes we've used in previous lavs
+You'll also find some of the helper classes we've used in previous lavs
 
     *  `JedisMaker.java`
     *  `WikiFetcher.java`
     *  `TermCounter.java`
     *  `WikiNodeIterable.java`
 
-Also, in `javacs-lab11`, you'll find the Ant build file `build.xml`.
+And as usual, in `javacs-lab11`, you'll find the Ant build file `build.xml`.
 
-Before you run `JedisMaker`, you have to modify it to provide information about your server.  If you did this in the previous lab, you might find it easiest to copy your modified version.  Otherwise you can find instructions in the previous lab.
+Before you run `JedisMaker`, you have to modify it to provide information about your server.  If you did this in the previous lab, you might want to make a copy of your modified version.  Otherwise you can find instructions in the previous lab.
 
 Run `ant build` to compile the source files, then run `ant JedisMaker` to make sure it is configured to connect to your Redis server.
 
-Now run `ant test` to run `WikiCrawlerTest`.  As usual, it should fail, because you have work to do.
+Now run `ant test` to run `WikiCrawlerTest`.  It should fail, because you have work to do!
 
 Here's the beginning of the `WikiCrawler` class we provided:
 
@@ -261,13 +263,13 @@ Your job is to fill in `crawl`.  Here's the prototype.
 	public String crawl(boolean testing) throws IOException {}
 ```
 
-The parameter `testing` is `true` when this method is called from `WikiCrawlerTest` and should be `false` otherwise.
+The parameter `testing` will be `true` when this method is called from `WikiCrawlerTest` and should be `false` otherwise.
 
 When testing is `true`, the `crawl` method should:
 
 *   Choose and remove a URL from the queue in FIFO order.
 
-*   Read the contents of the page using `WikiFetcher.readWikipedia`, which reads cached copies of the pages that are provided in this repository.
+*   Read the contents of the page using `WikiFetcher.readWikipedia`, which reads cached copies of pages we have included in this repository for testing purposes (to avoid problems if the Wikipedia version changes).
 
 *   It should index pages regardless of whether they are already indexed.
 
@@ -279,13 +281,13 @@ When testing is `false`, this method should:
 
 *   Choose and remove a URL from the queue in FIFO order.
 
-*   Read the contents of the page using `WikiFetcher.fetchWikipedia`, which reads the content from the Web.
+*   If the URL is already indexed, it should not index it again, and should return `null`.
 
-*   If the page is already indexed, it should not index it again, and should return `null`.
+*   Otherwise it should read the contents of the page using `WikiFetcher.fetchWikipedia`, which reads current content from the Web.
 
-*   Otherwise it should index the page, add links to the queue, and return the URL of the page it indexed.
+*   Then it should index the page, add links to the queue, and return the URL of the page it indexed.
 
-`WikiCrawler` test will load the queue with about 200 links and then invoke `crawl` three times.  After each invocation, it checks the return value and the new length of the queue.
+`WikiCrawlerTest` loads the queue with about 200 links and then invokes `crawl` three times.  After each invocation, it checks the return value and the new length of the queue.
 
 When your crawler is working as specified, this test should pass.  Good luck!
 
