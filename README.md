@@ -1,6 +1,6 @@
 # cs-application-crawling-lab
 
-## Learning goals 
+## Learning goals
 
 1.  Analyze the performance of Web indexing algorithms.
 2.  Implement a Web crawler.
@@ -8,7 +8,7 @@
 
 ## Overview
 
-In this lab, we present our solution to the previous lab and analyze the performance of Web indexing algorithms.  Then you will build a simple Web crawler.
+In this lab, we present our solution to the previous lab and analyze the performance of Web indexing algorithms.  Then we build a simple Web crawler.
 
 
 ## Our Redis-backed indexer
@@ -22,32 +22,32 @@ In our solution, we store two kinds of structures in Redis:
 We provided a function that takes a search term and returns the Redis key of its URLSet:
 
 ```java
-	private String urlSetKey(String term) {
-        return "URLSet:" + term;
-    }
+private String urlSetKey(String term) {
+    return "URLSet:" + term;
+}
 ```
 
-And a function that takes a URL and returns the Redis key of its TermCounter:
+And a function that takes a URL and returns the Redis key of its `TermCounter`:
 
 ```java
-	private String termCounterKey(String url) {
-        return "TermCounter:" + url;
-    }
+private String termCounterKey(String url) {
+    return "TermCounter:" + url;
+}
 ```
 
 Here's our implementation of `indexPage`, which takes a URL and a JSoup `Elements` object that contains the DOM tree of the paragraphs we want to index:
 
 ```java
-	public void indexPage(String url, Elements paragraphs) {
-		System.out.println("Indexing " + url);
-		
-		// make a TermCounter and count the terms in the paragraphs
-		TermCounter tc = new TermCounter(url);
-		tc.processElements(paragraphs);
-		
-		// push the contents of the TermCounter to Redis
-		pushTermCounterToRedis(tc);
-	}
+public void indexPage(String url, Elements paragraphs) {
+    System.out.println("Indexing " + url);
+
+    // make a TermCounter and count the terms in the paragraphs
+    TermCounter tc = new TermCounter(url);
+    tc.processElements(paragraphs);
+
+    // push the contents of the TermCounter to Redis
+    pushTermCounterToRedis(tc);
+}
 ```
 
 To index a page, we
@@ -59,25 +59,25 @@ To index a page, we
 Here's the new code that pushes a `TermCounter` to Redis:
 
 ```java
-	public List<Object> pushTermCounterToRedis(TermCounter tc) {
-		Transaction t = jedis.multi();
-		
-		String url = tc.getLabel();
-		String hashname = termCounterKey(url);
-		
-		// if this page has already been indexed; delete the old hash
-		t.del(hashname);
+public List<Object> pushTermCounterToRedis(TermCounter tc) {
+    Transaction t = jedis.multi();
 
-		// for each term, add an entry in the termcounter and a new
-		// member of the index
-		for (String term: tc.keySet()) {
-			Integer count = tc.get(term);
-			t.hset(hashname, term, count.toString());
-			t.sadd(urlSetKey(term), url);
-		}
-		List<Object> res = t.exec();
-		return res;
-	}
+    String url = tc.getLabel();
+    String hashname = termCounterKey(url);
+
+    // if this page has already been indexed; delete the old hash
+    t.del(hashname);
+
+    // for each term, add an entry in the termcounter and a new
+    // member of the index
+    for (String term: tc.keySet()) {
+        Integer count = tc.get(term);
+        t.hset(hashname, term, count.toString());
+        t.sadd(urlSetKey(term), url);
+    }
+    List<Object> res = t.exec();
+    return res;
+}
 ```
 
 This method uses a `Transaction` to collect the operations and send them to the server all at once, which is much faster than sending a series of small operations.
@@ -134,7 +134,7 @@ Because of the way we designed the index, these methods are simple and efficient
 
 Suppose we have indexed `N` pages and discovered `M` unique seach terms.  How long will it take to look up a search term, and how long will it take to index a page?  See if you can answer these questions before you continue.
 
-To look up a search term, we run `getCounts`, which 
+To look up a search term, we run `getCounts`, which
 
 1.  Creates a map.
 
@@ -206,11 +206,11 @@ When you check out the repository for this lab, you should find a file structure
 In the subdirectory `javacs-lab11/src/com/flatironschool/javacs` you'll find the source files for this lab:
 
     *  `WikiCrawler.java`, which contains starter code for your crawler.
-    
+
     *  `WikiCrawlerTest.java`, which contains test code for `WikiCrawler`.
-    
+
     *  `JedisIndex.java`, which is our solution to the previous lab.
-    
+
 You'll also find some of the helper classes we've used in previous lavs
 
     *  `JedisMaker.java`
@@ -243,7 +243,7 @@ public class WikiCrawler {
 	}
 
 	public int queueSize() {
-		return queue.size();	
+		return queue.size();
 	}
 ```
 
@@ -251,9 +251,9 @@ The instance variables are
 
 * `source` is the URL where we start crawling.
 
-* `index` is the `JedisIndex` where the results should go.  
+* `index` is the `JedisIndex` where the results should go.
 
-* `queue` is a `LinkedList` where we keep track of URLs that have been discovered but not yet indexed.  
+* `queue` is a `LinkedList` where we keep track of URLs that have been discovered but not yet indexed.
 
 * `wf` is the `WikiFetcher` we'll use to read and parse Web pages.
 
