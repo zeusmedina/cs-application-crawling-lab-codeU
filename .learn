@@ -1,6 +1,10 @@
 tags:
-  - a tag
+  - Web crawler
+  - Web index
+  - Graph traversal
+  - Breadth-first search
+  - Depth-first search
 languages:
-  - a language
+  - Java
 resources: 
-  - 0
+  - 3
