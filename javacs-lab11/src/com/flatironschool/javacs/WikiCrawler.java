@@ -36,7 +36,16 @@ public class WikiCrawler {
 		this.index = index;
 		queue.offer(source);
 	}
-			
+
+	/**
+	 * Returns the number of URLs in the queue.
+	 * 
+	 * @return
+	 */
+	public int queueSize() {
+		return queue.size();	
+	}
+
 	/**
 	 * Gets a URL from the queue and indexes it.
 	 * @param b 
@@ -118,14 +127,5 @@ public class WikiCrawler {
 		for (Entry<String, Integer> entry: map.entrySet()) {
 			System.out.println(entry);
 		}
-	}
-
-	/**
-	 * Returns the number of URLs in the queue.
-	 * 
-	 * @return
-	 */
-	public int queueSize() {
-		return queue.size();	
 	}
 }
