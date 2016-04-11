@@ -19,7 +19,9 @@ In our solution, we store two kinds of structures in Redis:
 
 *  For each URL, we have a `TermCounter`, which is a Redis Hash that maps each search term to the number of times it appears.
 
-We provided a function that takes a search term and returns the Redis key of its URLSet:
+We discussed these data types in the previous lab.  You can also [read about Redis Sets and Hashes here](http://redis.io/topics/data-types).
+
+In `JedisIndex`, we provide a function that takes a search term and returns the Redis key of its URLSet:
 
 ```java
 private String urlSetKey(String term) {
@@ -130,9 +132,9 @@ Here are the implementations:
 Because of the way we designed the index, these methods are simple and efficient.
 
 
-## Analysis of indexing and lookup
+## Analysis of lookup
 
-Suppose we have indexed `N` pages and discovered `M` unique seach terms.  How long will it take to look up a search term, and how long will it take to index a page?  See if you can answer these questions before you continue.
+Suppose we have indexed `N` pages and discovered `M` unique seach terms.  How long will it take to look up a search term?  Think about your answer before you continue.
 
 To look up a search term, we run `getCounts`, which
 
@@ -148,23 +150,27 @@ Inside the loop, we run `getCount`, which finds a `TermCounter` on Redis, looks 
 
 This algorithm is about as efficient as it can be, in terms of algorithmic complexity, but it is very slow because it sends many small operations to Redis.  You can make it much faster using a `Transaction`.  You might want to do that as an exercise, or you can see our solution in `RedisIndex.java`.
 
-To index a page, we traverse the DOM trees, find all the `TextNode` objects, and split up the strings into search terms.  That all takes time proportional to the number of words on the page.
+# Analysis of indexing
+
+Using the data structures we designed, how long will it take to index a page?  Again, think about your answer before you continue.
+
+To index a page, we traverse its DOM tree, find all the `TextNode` objects, and split up the strings into search terms.  That all takes time proportional to the number of words on the page.
 
 For each term, we increment a counter in a HashMap, which is a constant time operation.  So making the `TermCounter` takes time proportional to the number of words on the page.
 
-Pushing the `TermCounter` to Redis requires deleting a `TermCounter`, which takes time proportional to the number of terms. Then for each term we have to
+Pushing the `TermCounter` to Redis requires deleting a `TermCounter`, which is linear in the number of unique terms. Then for each term we have to
 
-1.  Add an element to a `URLSet`, which is constant time, and
+1.  Add an element to a `URLSet`, and
 
-2.  Add an element to a Redis `TermCounter`, which is constant time.
+2.  Add an element to a Redis `TermCounter`.
 
-So the overall complexity is proportional to the number of unique search terms.
+Both of these are constant time operations, so the total time to push the `TermCounter` is linear in the number of unique search terms.
 
 In summary, making the `TermCounter` is proportional to the number of words on the page.  Pushing the `TermCounter` to Redis is proportional to the number of unique terms.
 
 Since the number of words on the page usually exceeds the number of unique search terms, the overall complexity is proportional to the number of words on the page.  In theory a page might contain all search terms in the index, so the worst case performance is O(M), but we don't expect to see the worse case in practice.
 
-This analysis suggests a way to improve the performance of indexing and lookup: we should probably avoid indexing very common words.  First of all, they take up a lot of time and space, because they appear in almost every `URLSet` and `TermCounter`.  Furthermore, they are not very useful because they don't help identify relevant pages.
+This analysis suggests a way to improve performance: we should probably avoid indexing very common words.  First of all, they take up a lot of time and space, because they appear in almost every `URLSet` and `TermCounter`.  Furthermore, they are not very useful because they don't help identify relevant pages.
 
 Most search engines avoid indexing common words, which are known in this context as [stop words](https://en.wikipedia.org/wiki/Stop_words).
 
@@ -172,7 +178,7 @@ Most search engines avoid indexing common words, which are known in this context
 
 ## Graph traversal
 
-If you did the "Getting to Philosophy" lab, you already have a program that reads a Wikipedia page, finds the first link, uses the link to load the next page, and repeats.  This program is a specialized kind of crawler, but more commonly a Web crawler:
+If you did the "Getting to Philosophy" lab, you already have a program that reads a Wikipedia page, finds the first link, uses the link to load the next page, and repeats.  This program is a specialized kind of crawler, but when people say "Web crawler" they usually mean a program that:
 
 *   Loads a starting page and indexes the contents,
 
@@ -220,7 +226,7 @@ You'll also find some of the helper classes we've used in previous lavs
 
 And as usual, in `javacs-lab11`, you'll find the Ant build file `build.xml`.
 
-Before you run `JedisMaker`, you have to modify it to provide information about your server.  If you did this in the previous lab, you might want to make a copy of your modified version.  Otherwise you can find instructions in the previous lab.
+Before you run `JedisMaker`, you have to provide a file with information about your Redis server.  If you did this in the previous lab, you can just copy it over.  Otherwise you can find instructions in the previous lab.
 
 Run `ant build` to compile the source files, then run `ant JedisMaker` to make sure it is configured to connect to your Redis server.
 
