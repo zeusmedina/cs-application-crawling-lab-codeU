@@ -150,7 +150,7 @@ Inside the loop, we run `getCount`, which finds a `TermCounter` on Redis, looks 
 
 This algorithm is about as efficient as it can be, in terms of algorithmic complexity, but it is very slow because it sends many small operations to Redis.  You can make it much faster using a `Transaction`.  You might want to do that as an exercise, or you can see our solution in `RedisIndex.java`.
 
-# Analysis of indexing
+## Analysis of indexing
 
 Using the data structures we designed, how long will it take to index a page?  Again, think about your answer before you continue.
 
