@@ -14,7 +14,7 @@ import redis.clients.jedis.Jedis;
 
 public class WikiCrawler {
 	// keeps track of where we started
-	public final String source;
+	private final String source;
 	
 	// the index where the results go
 	private JedisIndex index;
@@ -57,7 +57,7 @@ public class WikiCrawler {
 		if (queue.isEmpty()) {
 			return null;
 		}
-		String url = queue.remove();
+		String url = queue.poll();
 		System.out.println("Crawling " + url);
 
 		if (testing==false && index.isIndexed(url)) {
