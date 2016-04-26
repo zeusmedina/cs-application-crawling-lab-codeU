@@ -26,13 +26,13 @@ public class JedisMaker {
 
 		// assemble the directory name
 		String slash = File.separator;
-		String filename = System.getProperty("user.dir") + slash +
-				"src" + slash + "resources" + slash + "redis_url.txt";
+		String filename = "resources" + slash + "redis_url.txt";
+		URL fileURL = JedisMaker.class.getClassLoader().getResource(filename);
 
-	    StringBuilder sb = new StringBuilder();
+	    	StringBuilder sb = new StringBuilder();
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new FileReader(filename));
+			br = new BufferedReader(new FileReader(fileURL.getFile()));
 		} catch (FileNotFoundException e1) {
 			System.out.println("File not found: " + filename);
 			printInstructions();
