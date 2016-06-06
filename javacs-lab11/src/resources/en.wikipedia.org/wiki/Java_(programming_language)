@@ -1687,7 +1687,7 @@ and standards</th>
 </table>
 
 
-<!-- 
+<!--
 NewPP limit report
 Parsed by mw1090
 Cached time: 20160307215602
@@ -1705,7 +1705,7 @@ Lua time usage: 0.525/10.000 seconds
 Lua memory usage: 6.75 MB/50 MB
 Number of Wikibase entities loaded: 1-->
 
-<!-- 
+<!--
 Transclusion expansion time report (%,ms,calls,template)
 100.00% 1120.078      1 - -total
  39.78%  445.582      1 - Template:Reflist
