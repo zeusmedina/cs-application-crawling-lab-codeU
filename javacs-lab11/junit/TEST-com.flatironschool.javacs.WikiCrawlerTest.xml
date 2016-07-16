@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="zeuss-MacBook-Pro.local" name="com.flatironschool.javacs.WikiCrawlerTest" skipped="0" tests="1" time="4.153" timestamp="2016-07-16T21:59:08">
+  <properties>
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="env.XPC_SERVICE_NAME" value="0" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="env.SECURITYSESSIONID" value="186a7" />
+    <property name="env._system_arch" value="x86_64" />
+    <property name="env.COLORFGBG" value="0;15" />
+    <property name="env.GEM_HOME" value="/Users/user/.rvm/gems/ruby-2.3.0" />
+    <property name="os.name" value="Mac OS X" />
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/classes" />
+    <property name="env.TMPDIR" value="/var/folders/jq/f8lczs013q36j6nzmw61_gt00000gn/T/" />
+    <property name="env.PWD" value="/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU" />
+    <property name="env.LANG" value="en_US.UTF-8" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="ant.home" value="/usr/local/Cellar/ant/1.9.6/libexec" />
+    <property name="java.runtime.version" value="1.8.0_40-b25" />
+    <property name="env.MY_RUBY_HOME" value="/Users/user/.rvm/rubies/ruby-2.3.0" />
+    <property name="env.Apple_PubSub_Socket_Render" value="/private/tmp/com.apple.launchd.HQ1jAceB7G/Render" />
+    <property name="env.rvm_version" value="1.26.11 (latest)" />
+    <property name="user.name" value="user" />
+    <property name="env.USER" value="user" />
+    <property name="env.SHELL" value="/bin/bash" />
+    <property name="env.__CF_USER_TEXT_ENCODING" value="0x1F5:0x0:0x0" />
+    <property name="env._system_type" value="Darwin" />
+    <property name="env.PATH" value="/Library/Frameworks/Python.framework/Versions/3.5/bin:/Users/user/.rvm/gems/ruby-2.3.0/bin:/Users/user/.rvm/gems/ruby-2.3.0@global/bin:/Users/user/.rvm/rubies/ruby-2.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/user/.rvm/bin" />
+    <property name="user.language" value="en" />
+    <property name="env.rvm_prefix" value="/Users/user" />
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib" />
+    <property name="ant.project.default-target" value="build" />
+    <property name="env.XPC_FLAGS" value="0x0" />
+    <property name="ant.project.name" value="JavaCS" />
+    <property name="env.rvm_path" value="/Users/user/.rvm" />
+    <property name="env.RUBY_VERSION" value="ruby-2.3.0" />
+    <property name="java.version" value="1.8.0_40" />
+    <property name="user.timezone" value="America/Phoenix" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="env._system_name" value="OSX" />
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/endorsed" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
+    <property name="env.ITERM_SESSION_ID" value="w0t1p1:7787564B-C80F-41AC-982E-0A185D0C697A" />
+    <property name="env.rvm_bin_path" value="/Users/user/.rvm/bin" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="env.SHLVL" value="3" />
+    <property name="file.separator" value="/" />
+    <property name="env._system_version" value="10.11" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="52.0" />
+    <property name="user.country" value="US" />
+    <property name="ant.file.JavaCS" value="/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/build.xml" />
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="env.LOGNAME" value="user" />
+    <property name="ant.file" value="/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/build.xml" />
+    <property name="os.version" value="10.11.4" />
+    <property name="env.TERM_PROGRAM_VERSION" value="3.0.2" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.version" value="25.40-b25" />
+    <property name="ant.library.dir" value="/usr/local/Cellar/ant/1.9.6/libexec/lib" />
+    <property name="junit.output.dir" value="junit" />
+    <property name="env.IRBRC" value="/Users/user/.rvm/rubies/ruby-2.3.0/.irbrc" />
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob" />
+    <property name="env.TERM" value="xterm-256color" />
+    <property name="sun.io.unicode.encoding" value="UnicodeBig" />
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="env.GEM_PATH" value="/Users/user/.rvm/gems/ruby-2.3.0:/Users/user/.rvm/gems/ruby-2.3.0@global" />
+    <property name="user.home" value="/Users/user" />
+    <property name="target" value="1.7" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="env.TERM_PROGRAM" value="iTerm.app" />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="java.library.path" value="/Users/user/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:." />
+    <property name="gopherProxySet" value="false" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="java.class.path" value="/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/bin:/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/lib/jedis-2.8.0.jar:/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/lib/jsoup-1.8.3.jar:/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/lib/junit-4.12.jar:/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/lib/hamcrest-core-1.3.jar:/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/lib/hamcrest-library-1.3.jar:/usr/local/Cellar/ant/1.9.6/libexec/lib/ant-launcher.jar:/usr/local/Cellar/ant/1.9.6/libexec/lib/ant.jar:/usr/local/Cellar/ant/1.9.6/libexec/lib/ant-junit.jar:/usr/local/Cellar/ant/1.9.6/libexec/lib/ant-junit4.jar" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner com.flatironschool.javacs.WikiCrawlerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/junit/TEST-com.flatironschool.javacs.WikiCrawlerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/junitvmwatcher8751245535202869483.properties propsfile=/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11/junit605388374620805947.properties" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.9.6 compiled on June 29 2015" />
+    <property name="env.TERM_SESSION_ID" value="w0t1p1:7787564B-C80F-41AC-982E-0A185D0C697A" />
+    <property name="ant.file.type.JavaCS" value="file" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.type" value="file" />
+    <property name="java.vm.specification.version" value="1.8" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="env.HOME" value="/Users/user" />
+    <property name="debuglevel" value="source,lines,vars" />
+    <property name="java.io.tmpdir" value="/var/folders/jq/f8lczs013q36j6nzmw61_gt00000gn/T/" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="env.SSH_AUTH_SOCK" value="/private/tmp/com.apple.launchd.H3l5mYOWHq/Listeners" />
+    <property name="os.arch" value="x86_64" />
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment" />
+    <property name="java.ext.dirs" value="/Users/user/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+    <property name="user.dir" value="/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU" />
+    <property name="env.JAVA_MAIN_CLASS_32594" value="org.apache.tools.ant.launch.Launcher" />
+    <property name="line.separator" value="&#xa;" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="basedir" value="/Users/user/Desktop/Google-CodeU/cs-application-crawling-lab-codeU/javacs-lab11" />
+    <property name="env.ITERM_PROFILE" value="New Profile" />
+    <property name="ant.java.version" value="1.8" />
+    <property name="ant.core.lib" value="/usr/local/Cellar/ant/1.9.6/libexec/lib/ant.jar" />
+    <property name="source" value="1.7" />
+    <property name="file.encoding" value="UTF-8" />
+    <property name="java.specification.version" value="1.8" />
+    <property name="ant.project.invoked-targets" value="test" />
+    <property name="env.DESTINATION" value="/var/folders/jq/f8lczs013q36j6nzmw61_gt00000gn/T/iTerm 2.1.4 Update" />
+  </properties>
+  <testcase classname="com.flatironschool.javacs.WikiCrawlerTest" name="testCrawl" time="4.104" />
+  <system-out><![CDATA[Crawling https://en.wikipedia.org/wiki/Java_(programming_language)
+Indexing https://en.wikipedia.org/wiki/Java_(programming_language)
+Crawling https://en.wikipedia.org/wiki/Programming_language
+Indexing https://en.wikipedia.org/wiki/Programming_language
+Crawling https://en.wikipedia.org/wiki/Concurrent_computing
+Indexing https://en.wikipedia.org/wiki/Concurrent_computing
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
